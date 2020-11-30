@@ -4,6 +4,7 @@ import tech.donau.course.data.Person;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,30 +15,39 @@ public class PersonResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Person> getPersons() {
-        return persons;
+    public Response getPersons() {
+        return Response.ok(persons).build();
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Person addPerson(Person person) {
+    public Response addPerson(Person person) {
+        if (persons.size() > 5) {
+            return Response.status(400).build();
+        }
         persons.add(person);
-        return person;
+        return Response.ok(person).build();
     }
 
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Person deletePerson(@PathParam("id") int id) {
-        return persons.remove(id);
+    public Response deletePerson(@PathParam("id") int id) {
+        if (id >= persons.size()) {
+            return Response.status(400).entity("Person Not Found").build();
+        }
+        return Response.ok(persons.remove(id)).build();
     }
 
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Person updatePerson(@PathParam("id") int id, Person person) {
+    public Response updatePerson(@PathParam("id") int id, Person person) {
+        if (id >= persons.size()) {
+            return Response.status(400).entity("Not Found Person").build();
+        }
         persons.remove(id);
         persons.add(id, person);
-        return person;
+        return Response.ok(person).build();
     }
 }
