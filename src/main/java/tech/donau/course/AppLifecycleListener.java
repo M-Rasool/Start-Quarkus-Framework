@@ -14,7 +14,7 @@ public class AppLifecycleListener {
 
     public void onStart(@Observes StartupEvent startupEvent) {
         LOGGER.info("onStart executed");
-        
+
     }
 
     public void onStop(@Observes ShutdownEvent shutdownEvent) {

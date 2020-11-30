@@ -11,15 +11,12 @@ import java.util.UUID;
 @ApplicationScoped
 public class GreetingService {
 
-    @ConfigProperty(name = "greeting.base64name")
-    Base64Value base64name;
-
     @Inject
     GreetingConfig greetingConfig;
 
     public String sayHello() {
         return "Hello " +
-                base64name +
+                greetingConfig.getName() +
                 ", you are from " +
                 greetingConfig.getCountry().getName();
     }
