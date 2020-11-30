@@ -1,5 +1,7 @@
 package tech.donau.course;
 
+import tech.donau.course.data.Person;
+
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -8,35 +10,34 @@ import java.util.List;
 @Path("person")
 public class PersonResource {
 
-    private List<String> persons = new ArrayList<>();
+    private static List<Person> persons = new ArrayList<>();
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getPersons() {
-        return persons.toString();
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Person> getPersons() {
+        return persons;
     }
 
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    @Path("/{name}")
-    public String addPerson(@PathParam("name") String name) {
-        persons.add(name);
-        return name;
+    @Produces(MediaType.APPLICATION_JSON)
+    public Person addPerson(Person person) {
+        persons.add(person);
+        return person;
     }
 
     @DELETE
-    @Produces(MediaType.TEXT_PLAIN)
     @Path("/{id}")
-    public String deletePerson(@PathParam("id") int id) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Person deletePerson(@PathParam("id") int id) {
         return persons.remove(id);
     }
 
     @PUT
-    @Produces(MediaType.TEXT_PLAIN)
     @Path("/{id}")
-    public String updatePerson(@PathParam("id") int id, String name) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Person updatePerson(@PathParam("id") int id, Person person) {
         persons.remove(id);
-        persons.add(id, name);
-        return name;
+        persons.add(id, person);
+        return person;
     }
 }
