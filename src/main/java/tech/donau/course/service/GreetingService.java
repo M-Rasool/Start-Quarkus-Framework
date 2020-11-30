@@ -1,6 +1,7 @@
 package tech.donau.course.service;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.jboss.logging.Logger;
 import tech.donau.course.config.Base64Value;
 import tech.donau.course.config.GreetingConfig;
 
@@ -11,10 +12,13 @@ import java.util.UUID;
 @ApplicationScoped
 public class GreetingService {
 
+    private static Logger LOGGER = Logger.getLogger(GreetingService.class.getName());
+
     @Inject
     GreetingConfig greetingConfig;
 
     public String sayHello() {
+        LOGGER.debug("Saying hello to random user");
         return "Hello " +
                 greetingConfig.getName() +
                 ", you are from " +
