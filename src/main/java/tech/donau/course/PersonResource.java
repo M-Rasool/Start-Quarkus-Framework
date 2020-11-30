@@ -1,7 +1,10 @@
 package tech.donau.course;
 
 import tech.donau.course.data.Person;
+import tech.donau.course.service.PersonService;
 
+import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -10,6 +13,9 @@ import java.util.List;
 
 @Path("person")
 public class PersonResource {
+
+//    @Inject
+//    PersonService personService;
 
     private static List<Person> persons = new ArrayList<>();
 
@@ -21,7 +27,9 @@ public class PersonResource {
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addPerson(Person person) {
+    public Response addPerson(@Valid Person person) {
+        // also you can create a class like personService and check Person there
+//        personService.checkPerson(person);
         if (persons.size() > 5) {
             return Response.status(400).build();
         }
